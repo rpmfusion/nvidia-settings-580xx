@@ -1,13 +1,14 @@
-Name:           nvidia-settings
+%global appname nvidia-settings
+Name:           %{appname}-580xx
 Epoch:          3
 Version:        580.119.02
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Configure the NVIDIA graphics driver
 
 License:        GPLv2+
-URL:            https://github.com/NVIDIA/%{name}
-#Source0:        %url/archive/%{version}/%{name}-%{version}.tar.gz
-Source0:        https://download.nvidia.com/XFree86/%{name}/%{name}-%{version}.tar.bz2
+URL:            https://github.com/NVIDIA/%{appname}
+Source0:        %{url}/archive/%{version}/%{appname}-%{version}.tar.gz
+#Source0:        https://download.nvidia.com/XFree86/%%{name}/%%{name}-%%{version}.tar.bz2
 Source1:        %{name}-user.desktop
 Source2:        %{name}.appdata.xml
 
@@ -30,7 +31,11 @@ BuildRequires:  mesa-libGL-devel
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  vulkan-headers
 
-Requires: nvidia-kmod-common
+Conflicts:      %{appname}-470xx
+Conflicts:      %{appname}-390xx
+Conflicts:      %{appname}
+
+Requires:       nvidia-580xx-kmod-common >= %{epoch}:%{version}
 
 
 %description
@@ -43,7 +48,7 @@ nvidia-settings is compatible with driver %{version}.
 
 
 %prep
-%autosetup -p1
+%autosetup -n %{appname}-%{version} -p1
 # We are building from source
 rm -rf src/libXNVCtrl/libXNVCtrl.a
 
@@ -69,7 +74,7 @@ popd
   STRIP_CMD=true NV_KEEP_UNSTRIPPED_BINARIES=1 \
   X_LDFLAGS="-L%{_libdir}" \
   CC_ONLY_CFLAGS="%{optflags}"
-(cd src/_out/Linux_*/ ; for i in %{name} libnvidia-gtk3.so libnvidia-wayland-client.so; do cp $i.unstripped $i; done ; cd -)
+(cd src/_out/Linux_*/ ; for i in %{appname} libnvidia-gtk3.so libnvidia-wayland-client.so; do cp $i.unstripped $i; done ; cd -)
 
 
 %install
@@ -77,8 +82,8 @@ popd
 
 # Desktop entry for nvidia-settings
 mkdir -p %{buildroot}%{_datadir}/applications
-install -m 0644 doc/nvidia-settings.desktop \
-  %{buildroot}%{_datadir}/applications
+install -m 0644 doc/%{appname}.desktop \
+  %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 sed -i -e 's|__UTILS_PATH__/||' -e 's|__PIXMAP_PATH__/||' \
   -e 's|nvidia-settings.png|nvidia-settings|' \
@@ -90,8 +95,7 @@ desktop-file-validate \
 
 # Pixmap installation
 mkdir -p %{buildroot}%{_datadir}/pixmaps
-install -pm 0644 doc/nvidia-settings.png \
-  %{buildroot}%{_datadir}/pixmaps
+install -pm 0644 doc/nvidia-settings.png %{buildroot}%{_datadir}/pixmaps
 
 # User settings installation
 mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
@@ -113,7 +117,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 %{_bindir}/nvidia-settings
 %{_libdir}/libnvidia-gtk3.so.%{version}
 %{_libdir}/libnvidia-wayland-client.so.%{version}
-%{_datadir}/pixmaps/%{name}.png
+%{_datadir}/pixmaps/%{appname}.png
 %{_datadir}/applications/%{name}.desktop
 %if 0%{?fedora}
 %{_metainfodir}/%{name}.appdata.xml
@@ -122,6 +126,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 
 
 %changelog
+* Tue Dec 23 2025 Sérgio Basto <sergio@serjux.com> - 3:580.119.02-2
+- Initial commit for nvidia-settings-580xx
+
 * Fri Dec 12 2025 Leigh Scott <leigh123linux@gmail.com> - 3:580.119.02-1
 - Update to 580.119.02 release
 
