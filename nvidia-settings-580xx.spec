@@ -2,7 +2,7 @@
 Name:           %{appname}-580xx
 Epoch:          3
 Version:        580.119.02
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Configure the NVIDIA graphics driver
 
 License:        GPLv2+
@@ -126,6 +126,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 
 
 %changelog
+* Mon Feb 02 2026 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 3:580.119.02-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
+
 * Tue Dec 23 2025 Sérgio Basto <sergio@serjux.com> - 3:580.119.02-2
 - Initial commit for nvidia-settings-580xx
 
