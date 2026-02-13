@@ -33,7 +33,9 @@ BuildRequires:  vulkan-headers
 
 Conflicts:      %{appname}-470xx
 Conflicts:      %{appname}-390xx
-Conflicts:      %{appname}
+Conflicts:      %{appname} > %{?epoch}:%{version}
+Provides:       %{appname} = %{?epoch}:%{version}
+Obsoletes:      %{appname} < %{?epoch}:%{version}
 
 Requires:       nvidia-580xx-kmod-common >= %{epoch}:%{version}
 
