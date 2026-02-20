@@ -1,8 +1,8 @@
 %global appname nvidia-settings
 Name:           %{appname}-580xx
 Epoch:          3
-Version:        580.126.09
-Release:        2%{?dist}
+Version:        580.126.18
+Release:        1%{?dist}
 Summary:        Configure the NVIDIA graphics driver
 
 License:        GPLv2+
@@ -128,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 
 
 %changelog
+* Fri Feb 20 2026 Nicolas Chauvet <kwizart@gmail.com> - 3:580.126.18-1
+- Update to 580.126.18
+
 * Sat Feb 14 2026 Sérgio Basto <sergio@serjux.com> - 3:580.126.09-2
 - Provides and Obsoletes nvidia-settings <= 580.x.x
 
