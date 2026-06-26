@@ -1,7 +1,7 @@
 %global appname nvidia-settings
 Name:           %{appname}-580xx
 Epoch:          3
-Version:        580.159.04
+Version:        580.173.02
 Release:        1%{?dist}
 Summary:        Configure the NVIDIA graphics driver
 
@@ -128,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 
 
 %changelog
+* Fri Jun 26 2026 Mike Rochefort <mroche@omenos.dev> - 3:580.173.02-1
+- Update nvidia-settings-580xx to 580.173.02
+
 * Fri May 29 2026 Sérgio Basto <sergio@serjux.com> - 3:580.159.04-1
 - Update nvidia-settings-580xx to 580.159.04
 
